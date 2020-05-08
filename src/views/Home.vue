@@ -1,18 +1,37 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ArrowCart />
+    <Store />
+    <Cart />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Store from '../components/Store.vue'
+import Cart from '../components/Cart.vue'
+import ArrowCart from '../components/ArrowCart.vue'
+import store from '../store/index'
+
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    Store,
+    Cart,
+    ArrowCart
+  },
+
+  created() {
+    store.commit('cartDesactive');
   }
 }
 </script>
+
+<style lang="scss">
+
+.home {
+  display: flex;
+}
+
+</style>
