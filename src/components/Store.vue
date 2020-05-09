@@ -29,7 +29,7 @@
                 <p class="products__data__stock" v-else>
                     Out of Stock
                 </p>
-                <button class="products__data__button" @click="item.stock-- && getId(item.id)">
+                <button class="products__data__button" @click="item.stock-- && getProductsCart(item.id)">
                    + add
                 </button>
 
@@ -41,8 +41,8 @@
     <div class="buttons">
 
         
-    <button @click="menosId" v-if="lent > 1">&#8592;</button>
-    <button @click="masId">+</button>
+    <button @click="lessProducts" v-if="lent > 1">&#8592;</button>
+    <button @click="moreProducts">+</button>
 
     </div>
 </div>
@@ -50,7 +50,7 @@
 
 <script>
 
-import {mapState, mapGetters} from 'vuex';
+import {mapState} from 'vuex';
 import Heart from '../components/Heart.vue'
 import store from '../store/index.ts'
 
@@ -69,7 +69,8 @@ export default  {
 
     created() {
 
-        store.commit('getProducts')    
+        store.commit('getProducts')
+
     },
 
     computed: {
@@ -79,14 +80,14 @@ export default  {
     methods: {
         
 
-        masId() {
+        moreProducts() {
 
                 this.las = this.las + 12;
                 this.lent = this.lent + 12
             
         },
 
-        menosId() {
+        lessProducts() {
              if( this.lent > 0) {
                 this.las = this.las - 12;
                 this.lent = this.lent - 12
@@ -95,7 +96,7 @@ export default  {
             }
         },
 
-        getId(value) {
+        getProductsCart(value) {
              const newItem = this.items.find( id => id.id == value);
              const repeatItem = this.cartbox.find( id => id.id === value);
             

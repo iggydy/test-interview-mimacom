@@ -42,7 +42,11 @@ export default new Vuex.Store({
       } else {
         state.menuActive = false;
       }
-    }
+    },
+
+    removeItem(state, index) {
+      state.cartbox.splice(index, 1);
+    },
 
   },
   actions: {

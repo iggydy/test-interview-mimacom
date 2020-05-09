@@ -5,7 +5,7 @@
 
     <div :class="'cart-box'">
 
-    <div v-for="item in cartbox" :key="item.id">
+    <div v-for="(item, index) in cartbox" :key="index">
         <div class="box">
             <div class="box__img">
                 <img :src="item.image_url" alt="">
@@ -15,7 +15,7 @@
                 <div class="box__info__count">
                     <button @click="item.quant--" >-</button>
                     <p>{{ item.quant }}</p>
-                    <button @click="item.quant++" >+</button>
+                    <button @click="item.quant++">+</button>
                 </div>
             </div> 
             <p class="box__price">{{ item.price * item.quant }} €</p>        
@@ -25,7 +25,7 @@
 
     <div class="total">
         <button>Make a payment</button>
-        <p>Totla : 10000€</p>
+        <p>Totla : {{ total }}</p>
     </div>
     
 
@@ -36,8 +36,8 @@
 
 <script>
 
-import {mapState, mapGetters} from 'vuex';
-import store from '../store/index.ts'
+import {mapState} from 'vuex';
+
 
 
 
@@ -46,19 +46,18 @@ export default  {
 
     data() {
         return { 
+            total: 0
         }
     },
 
 
     computed: {
         ...mapState(['menuActive', 'cartbox']),
-        
-        cart() {
-            return this.$store.state.cartbox
-        }
+
     },
 
     methods: {
+
     },
 }
 </script>
