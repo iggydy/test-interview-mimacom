@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <ArrowCart />
+    <ArrowCart v-if="showNav" />
     <Store />
     <Cart />
   </div>
@@ -12,6 +12,8 @@ import Store from '../components/Store.vue'
 import Cart from '../components/Cart.vue'
 import ArrowCart from '../components/ArrowCart.vue'
 import store from '../store/index'
+import {mapState} from 'vuex';
+
 
 
 export default {
@@ -24,7 +26,11 @@ export default {
 
   created() {
     store.commit('cartDesactive');
-  }
+  },
+
+  computed: {
+    ...mapState(['showNav']),
+  },
 }
 </script>
 
