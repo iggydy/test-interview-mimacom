@@ -5,8 +5,8 @@
 
     <div :class="'cart-box'">
 
-    <div v-for="(item, index) in cartbox" :key="index">
-        <div v-if="item.quant > 0"  class="box">
+    <div v-for="item in cartbox" :key="item.id">
+        <div class="box">
             <div class="box__img">
                 <img :src="item.image_url" alt="">
             </div>
@@ -36,26 +36,29 @@
 
 <script>
 
-import {mapState} from 'vuex';
+import {mapState, mapGetters} from 'vuex';
+import store from '../store/index.ts'
+
 
 
 export default  {
 
 
     data() {
-        return {
- 
+        return { 
         }
     },
 
 
     computed: {
-        ...mapState(['cartbox' , 'menuActive']),
+        ...mapState(['menuActive', 'cartbox']),
+        
+        cart() {
+            return this.$store.state.cartbox
+        }
     },
 
     methods: {
-
-        
     },
 }
 </script>

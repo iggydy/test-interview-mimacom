@@ -1,18 +1,34 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
+
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    items: [],
     cartbox: [],
-    menuActive: true
+    menuActive: true,
   },
 
-  getters: { 
+  getters: {
+
   },
   
   mutations: {
+
+    async getProducts(state) {
+
+      try {
+        const res = await axios.get(`http://localhost:3000/grocery`);
+        state.items = res.data;
+        
+        } catch(e) {
+          console.error(e);
+        }
+
+    },
 
     activeMenu(state) {
       state.menuActive = !state.menuActive

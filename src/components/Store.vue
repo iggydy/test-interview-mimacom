@@ -50,8 +50,7 @@
 
 <script>
 
-import axios from 'axios';
-import {mapState} from 'vuex';
+import {mapState, mapGetters} from 'vuex';
 import Heart from '../components/Heart.vue'
 import store from '../store/index.ts'
 
@@ -62,30 +61,23 @@ export default  {
         return {
             lent: 0,
             las: 12,
-            items: [],
             condition: true,
             imgurl: 'https://i.picsum.photos/id/237/200/300.jpg',
             color: true
         }
     },
 
-    async mounted() {
-        try {
-            const res = await axios.get(`http://localhost:3000/grocery`);
-            this.items = res.data;
-            this.items.forEach((a)=> {
-                a.quant = 1
-            });
-        } catch(e) {
-            console.error(e);
-        }
+    created() {
+
+        store.commit('getProducts')    
     },
 
     computed: {
-        ...mapState(['cartbox']),
+        ...mapState(['cartbox', 'items']),
     },
 
     methods: {
+        
 
         masId() {
 
@@ -104,17 +96,20 @@ export default  {
         },
 
         getId(value) {
-             const newItem = this.items.find( id => id.id === value);
-             const repeatItem = this.cartbox.find( id => id.id == value);
+             const newItem = this.items.find( id => id.id == value);
+             const repeatItem = this.cartbox.find( id => id.id === value);
             
-             if (!value) {
+            if (!value) {
                 return;
             } else {
 
                 if (repeatItem) {
                     repeatItem.quant++;
                 } else {
-                    this.cartbox.push(newItem);    
+                    const newItemQuant = newItem
+                    newItemQuant.quant = 1
+                    this.cartbox.push(newItemQuant);
+                    console.log(newItemQuant) 
                 }
             }
         },
