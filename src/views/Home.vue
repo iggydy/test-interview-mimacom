@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <ArrowCart v-if="showNav" />
+    <ArrowCart />
     <Store />
     <Cart />
   </div>
@@ -12,7 +12,6 @@ import Store from '../components/Store.vue'
 import Cart from '../components/Cart.vue'
 import ArrowCart from '../components/ArrowCart.vue'
 import store from '../store/index'
-import {mapState} from 'vuex';
 
 
 
@@ -29,7 +28,6 @@ export default {
   },
 
   computed: {
-    ...mapState(['showNav']),
   },
 }
 </script>

@@ -10,7 +10,6 @@ export default new Vuex.Store({
     items: [],
     cartbox: [],
     menuActive: true,
-    showNav: false
   },
 
   getters: {
@@ -40,10 +39,8 @@ export default new Vuex.Store({
 
       if (mq) {
         state.menuActive = true;
-        state.showNav = false;
       } else {
         state.menuActive = false;
-        state.showNav = true;
       }
     },
 

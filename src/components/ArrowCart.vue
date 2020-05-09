@@ -34,6 +34,7 @@ export default {
   z-index: 1;
   top: 25px;
   right: 25px;
+  display: none;
 
 
   .arrow {
@@ -45,6 +46,12 @@ export default {
     &:last-child {
       margin: 0;
     }
+  }
+
+
+  @media (max-width: 768px) {
+    display: block;
+    
   }
 }
 
