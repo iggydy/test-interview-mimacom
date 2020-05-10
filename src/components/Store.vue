@@ -4,7 +4,7 @@
     <div class="products-list">
 
         <div v-for="(item, index) in items.slice(lent, less)" :key="index" class="products">
-            <div @click="putProductFavorite( item.id )">
+            <div @click="item.favorite = !item.favorite">
                 <Heart class="products__heart" :class="{'active' : item.favorite }"/> 
 
             </div>
