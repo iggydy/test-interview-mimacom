@@ -1,34 +1,67 @@
 <template>
 <div class="Cart" :class="{'active-cart' : !menuActive}">
 
-    <h1>Cart</h1>
+    <div @click="activeFa"> 
+        <Heart class="heart" :class="{'active' : favoriteActive}" /> 
+    </div>
 
-    <div :class="'cart-box'">
 
-    <div v-for="(item, index) in cartbox" :key="index">
-        <div class="box">
-            <div class="box__img">
-                <img :src="item.image_url" alt="">
-            </div>
-            <div class="box__info">
-                <p class="box__info__title">{{item.productName}}</p>
-                <div class="box__info__count">
-                    <button @click="item.quant--" >-</button>
-                    <p>{{ item.quant }}</p>
-                    <button @click="item.quant++">+</button>
+
+    <div class="list" v-if="!favoriteActive">
+
+        <h1 class="Cart__title">Cart</h1>
+        <div :class="'cart-box'">
+
+            <div v-for="(item, index) in cartbox" :key="index">
+                <div class="box">
+                    <div class="box__img">
+                        <img :src="item.image_url" alt="">
+                    </div>
+                    <div class="box__info">
+                        <p class="box__info__title">{{item.productName}}</p>
+                        <div class="box__info__count">
+                            <button @click="item.quant--" >-</button>
+                            <p>{{ item.quant }}</p>
+                            <button @click="item.quant++">+</button>
+                        </div>
+                    </div> 
+                    <p class="box__price">{{ item.price * item.quant }} €</p>        
                 </div>
-            </div> 
-            <p class="box__price">{{ item.price * item.quant }} €</p>        
+            </div>
         </div>
-    </div>
+
+        <div class="total">
+            <button>Make a payment</button>
+            <p>Totla : {{ total }}</p>
+        </div>
+
     </div>
 
-    <div class="total">
-        <button>Make a payment</button>
-        <p>Totla : {{ total }}</p>
+    <div class="list" v-else>
+
+        <h1 class="Cart__title">Favorite List</h1>
+
+        <div :class="'cart-box'">
+
+            <div v-for="(item, index) in favorite" :key="index">
+                <div class="box">
+                    <div class="box__img">
+                        <img :src="item.image_url" alt="">
+                    </div>
+                    <div class="box__info">
+                        <p class="box__info__title">{{item.productName}}</p>
+                        <div class="box__info__count">
+                            <button>+ add</button>
+                        </div>
+                    </div> 
+                    <p class="box__price">{{ item.price }} €</p>        
+                </div>
+            </div>
+        </div>
+
     </div>
+
     
-
 
         
 </div>
@@ -37,8 +70,8 @@
 <script>
 
 import {mapState} from 'vuex';
-
-
+import Heart from '../components/Heart.vue'
+import axios from 'axios';
 
 
 export default  {
@@ -46,7 +79,20 @@ export default  {
 
     data() {
         return { 
-            total: 0
+            total: 0,
+            favoriteActive: false,
+            favorite: []
+        }
+    },
+
+    async created() {
+        try {
+        const res = await axios.get(`http://localhost:3000/grocery?favorite=1`);
+        this.favorite = res.data;
+
+        
+        } catch(e) {
+          console.error(e);
         }
     },
 
@@ -58,10 +104,18 @@ export default  {
 
     methods: {
 
+        activeFa() {
+            this.favoriteActive = !this.favoriteActive;
+        }
+
     },
+
+    components: {
+        Heart
+    }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 
 .Cart {
     width: 25%;
@@ -79,6 +133,32 @@ export default  {
     justify-content: space-between;
     transition: 0.3s all ease;
 
+    &__title {
+        margin-bottom: 30px;
+    }
+
+    .heart {
+        position: absolute;
+        stroke: #000;;
+        left: 25px;
+        top: 25px;
+    }
+
+    .active {
+
+        svg {
+            fill: #000;
+        }
+    }
+
+    .list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+    }
+
     .cart-box {
         height: 80%;
         overflow-y: auto;
@@ -88,8 +168,6 @@ export default  {
         }
 
     }
-
-
 
     .box {
         width: 100%;
@@ -141,10 +219,11 @@ export default  {
                 button {
                     border: 0px;
                     background: #fff;
-                    font-size: 18px;
+                    font-size: 12px;
                     cursor: pointer;
                 }
             }
+
         }
 
         &__price {

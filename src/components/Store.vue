@@ -3,8 +3,8 @@
     <h1 class="Store__title">Product List</h1>
     <div class="products-list">
 
-        <div v-for="(item, index) in items.slice(lent, las)" :key="index" class="products">
-            <div @click="item.favorite = !item.favorite">
+        <div v-for="(item, index) in items.slice(lent, less)" :key="index" class="products">
+            <div @click="putProductFavorite( item.id )">
                 <Heart class="products__heart" :class="{'active' : item.favorite }"/> 
 
             </div>
@@ -29,7 +29,7 @@
                 <p class="products__data__stock" v-else>
                     Out of Stock
                 </p>
-                <button class="products__data__button" @click="item.stock-- && getProductsCart(item.id)">
+                <button class="products__data__button" @click="item.stock-- && pushProductsCart(item.id)">
                    + add
                 </button>
 
@@ -60,9 +60,8 @@ export default  {
     data() {
         return {
             lent: 0,
-            las: 12,
+            less: 12,
             condition: true,
-            imgurl: 'https://i.picsum.photos/id/237/200/300.jpg',
             color: true
         }
     },
@@ -82,21 +81,21 @@ export default  {
 
         moreProducts() {
 
-                this.las = this.las + 12;
+                this.less = this.less + 12;
                 this.lent = this.lent + 12
             
         },
 
         lessProducts() {
              if( this.lent > 0) {
-                this.las = this.las - 12;
+                this.less = this.less - 12;
                 this.lent = this.lent - 12
             } else {
                 return;
             }
         },
 
-        getProductsCart(value) {
+        pushProductsCart(value) {
              const newItem = this.items.find( id => id.id == value);
              const repeatItem = this.cartbox.find( id => id.id === value);
             
@@ -110,15 +109,19 @@ export default  {
                     const newItemQuant = newItem
                     newItemQuant.quant = 1
                     this.cartbox.push(newItemQuant);
-                    console.log(newItemQuant) 
                 }
             }
         },
 
-    },
+        putProductFavorite(value) {
+            const findItem = this.items.find( id => id.id == value);
+            const favoriteState = findItem.favorite
 
-    mutations: {
-        
+            console.log(favoriteState)            
+
+        }
+
+
 
     },
 
