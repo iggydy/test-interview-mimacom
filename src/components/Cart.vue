@@ -162,6 +162,7 @@ export default  {
     .cart-box {
         height: 80%;
         overflow-y: auto;
+        margin-bottom: 20px;
 
         &::-webkit-scrollbar-y {
             display: none;

@@ -38,12 +38,9 @@
         </div>
 
     </div>
-    <div class="buttons">
-
-        
-    <button @click="lessProducts" v-if="lent > 1">&#8592;</button>
-    <button @click="moreProducts">+</button>
-
+    <div class="Store__buttons">   
+        <div @click="lessProducts" class="Store__buttons__left" :class="{'desactive-arrow': desactiveArrow}"></div>
+        <div @click="moreProducts" class="Store__buttons__right"></div>
     </div>
 </div>
 </template>
@@ -62,7 +59,8 @@ export default  {
             lent: 0,
             less: 12,
             condition: true,
-            color: true
+            color: true,
+            desactiveArrow: true
         }
     },
 
@@ -82,16 +80,18 @@ export default  {
         moreProducts() {
 
                 this.less = this.less + 12;
-                this.lent = this.lent + 12
+                this.lent = this.lent + 12;
+                this.desactiveArrow = false
             
         },
 
         lessProducts() {
-             if( this.lent > 0) {
+            if ( this.lent > 0) {
                 this.less = this.less - 12;
-                this.lent = this.lent - 12
+                this.lent = this.lent - 12;
+                this.desactiveArrow = false;
             } else {
-                return;
+                this.desactiveArrow = true;
             }
         },
 
@@ -148,6 +148,7 @@ export default  {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+        margin-bottom: 30px;
 
         .products {
             position: relative;
@@ -238,6 +239,34 @@ export default  {
 
         }
       }    
+    }
+
+    &__buttons {
+        display: flex;
+        width: 30%;
+        justify-content: space-between;
+
+        &__left {
+            height: 15px; 
+            width: 15px;
+            border: 1px solid #000;
+            border-width: 2px 2px 0 0;
+            transform: rotate(225deg);
+            cursor: pointer;
+        }
+        
+        &__right {
+            height: 15px; 
+            width: 15px;
+            border: 1px solid #000;
+            border-width: 2px 2px 0 0;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+
+        .desactive-arrow {
+            opacity: 0.3;
+        }
     }
 
     @media (max-width: 1100px) {
