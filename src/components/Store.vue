@@ -1,50 +1,53 @@
 <template>
 <div class="Store">
-    <h1 class="Store__title">Product List</h1>
-    <div class="products-list">
+    <div class="content">
 
-        <div v-for="(item, index) in items.slice(lent, less)" 
-            :key="index" 
-            class="products"
-            @click="pushProductsCartResponsive(item.id)">
-            
-            <div @click="item.favorite = !item.favorite">
-                <Heart class="products__heart" :class="{'active' : item.favorite }"/> 
-
+        <h1 class="Store__title">Product List</h1>
+        <div class="products-list">
+        
+            <div v-for="(item, index) in items.slice(lent, less)" 
+                :key="index" 
+                class="products"
+                @click="pushProductsCartResponsive(item.id)">
+                
+                <div @click="item.favorite = !item.favorite">
+                    <Heart class="products__heart" :class="{'active' : item.favorite }"/> 
+    
+                </div>
+                
+                <div class="products__img">
+                    <img :src="item.image_url" alt="">
+                </div>
+                <div class="products__data">
+                    <p class="products__data__title">
+                        {{ item.productName }}
+                    </p>
+                    <p class="products__data__price">
+                        {{ item.price }} €
+                    </p>
+                    <p class="products__data__description">
+                        {{ item.productDescription }}
+                    </p>
+                    <p class="products__data__stock" v-if="item.stock > 0">
+                        {{ item.stock }} left
+                    </p>
+    
+                    <p class="products__data__stock" v-else>
+                        Out of Stock
+                    </p>
+                    <button class="products__data__button" @click="item.stock-- && pushProductsCart(item.id)">
+                       + add
+                    </button>
+    
+                </div>
+                
             </div>
-            
-            <div class="products__img">
-                <img :src="item.image_url" alt="">
-            </div>
-            <div class="products__data">
-                <p class="products__data__title">
-                    {{ item.productName }}
-                </p>
-                <p class="products__data__price">
-                    {{ item.price }} €
-                </p>
-                <p class="products__data__description">
-                    {{ item.productDescription }}
-                </p>
-                <p class="products__data__stock" v-if="item.stock > 0">
-                    {{ item.stock }} left
-                </p>
-
-                <p class="products__data__stock" v-else>
-                    Out of Stock
-                </p>
-                <button class="products__data__button" @click="item.stock-- && pushProductsCart(item.id)">
-                   + add
-                </button>
-
-            </div>
-            
+    
         </div>
-
-    </div>
-    <div class="Store__buttons">   
-        <div @click="lessProducts" class="Store__buttons__left" :class="{'desactive-arrow': desactiveArrow}"></div>
-        <div @click="moreProducts" class="Store__buttons__right"></div>
+        <div class="Store__buttons">   
+            <div @click="lessProducts" class="Store__buttons__left" :class="{'desactive-arrow': desactiveArrow}"></div>
+            <div @click="moreProducts" class="Store__buttons__right"></div>
+        </div>
     </div>
 </div>
 </template>
@@ -162,9 +165,16 @@ export default  {
 .Store {
     width: 72%;
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: 50px 0 50px 0;
+    justify-content: center;
+
+    .content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin: 50px 0 50px 0;
+        max-width: 1200px;
+
+    }
 
     &__title {
         margin-bottom: 50px;

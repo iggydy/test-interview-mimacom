@@ -163,6 +163,7 @@ export default  {
         height: 80%;
         overflow-y: auto;
         margin-bottom: 20px;
+        max-width: 400px;
 
         &::-webkit-scrollbar-y {
             display: none;
