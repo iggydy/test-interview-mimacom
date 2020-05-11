@@ -3,7 +3,11 @@
     <h1 class="Store__title">Product List</h1>
     <div class="products-list">
 
-        <div v-for="(item, index) in items.slice(lent, less)" :key="index" class="products">
+        <div v-for="(item, index) in items.slice(lent, less)" 
+            :key="index" 
+            class="products"
+            @click="pushProductsCartResponsive(item.id)">
+            
             <div @click="item.favorite = !item.favorite">
                 <Heart class="products__heart" :class="{'active' : item.favorite }"/> 
 
@@ -110,6 +114,29 @@ export default  {
                     newItemQuant.quant = 1
                     this.cartbox.push(newItemQuant);
                 }
+            }
+        },
+
+        pushProductsCartResponsive(value) {
+            const mq = window.matchMedia("(max-width: 768px)").matches;
+            const newItem = this.items.find( id => id.id == value);
+            const repeatItem = this.cartbox.find( id => id.id === value);
+            
+            if(mq){
+                if (!value) {
+                    return;
+                } else {
+                   
+                    if (repeatItem) {
+                        repeatItem.quant++;
+                    } else {
+                        const newItemQuant = newItem
+                        newItemQuant.quant = 1
+                        this.cartbox.push(newItemQuant);
+                    }
+                }
+            } else {
+                return;
             }
         },
 
